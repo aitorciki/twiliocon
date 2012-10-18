@@ -87,8 +87,8 @@ class DucksboardNotificationProtocol(WebSocketClientProtocol):
         }
         self.send_message(msg)
 
-    def track(self, msg):
-        self.factory.tracker.inspect(msg['data'])
+    def alert(self, msg):
+        self.factory.tracker.alert(msg['data'])
 
     def onOpen(self):
         self.login()
@@ -96,7 +96,7 @@ class DucksboardNotificationProtocol(WebSocketClientProtocol):
     def onMessage(self, msg, binary):
         handlers = {
             'welcome': self.subscribe,
-            'data': self.track,
+            'data': self.alert,
             'subscribed': lambda _: None,
             'unsubscribed': lambda _: None,
             'fetched': lambda _: None,
@@ -117,9 +117,7 @@ class DucksboardTracker(object):
         self.from_ = from_
         self.to = to
 
-    def inspect(self, data):
-        # silly version that always meets the threshold condition
-        # (we only get tweets containing the keyword!)
+    def alert(self, data):
         self.send_sms(data['value']['content'])
         self.make_call(data['value']['content'])
 
