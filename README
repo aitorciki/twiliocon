@@ -1,0 +1,5 @@
+Uses Ducksboard as a real-time data broker.
+
+Uses a Twitter Ducksboard search widget to trigger alerts for a keyword. For each tweet matching the search, an SMS and a call are sent/made to a phone with the tweet as their content thanks to Twilio.
+
+Pretty cool :)
